@@ -1,0 +1,85 @@
+{% extends 'header.html'%}
+{% load static %}
+{% block content%} 
+<!DOCTYPE html>
+<html>
+   <head>
+     
+   </head>
+   <body class="sub_page">
+      <div class="hero_area">
+         
+      </div>
+      <!-- inner page section -->
+      <section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>My Orders</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end inner page section -->
+      <!-- product section -->
+      <section class="product_section layout_padding">
+         <div class="container">
+            <div class="heading_container heading_center">
+               <h2>
+                  {% if carts %}
+                  Orders <span>Products</span>
+                  {% else %}
+                  No <span>Products In Order Yet</span>
+                  {% endif %}
+               </h2>
+            </div>
+            <div class="row">
+               {% for i in carts %}
+               <div class="col-sm-6 col-md-5 col-lg-4">
+                  <div class="box">
+                     
+                     <div class="img-box">
+                        <img src="{{i.product.product_pic.url}}" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           {{i.product.product_name}}
+                        </h5>
+                        <h6>
+                           ₹ {{i.product.product_price}}
+                        </h6>
+                     </div>
+                     <div class="detail-box">
+                        <form action="{% url 'change-qty' %}" name="change-qty" method="post">
+                           {% csrf_token %}
+                           <input type="hidden" name="pk" id="" value="{{i.pk}}">
+                           <h6>Quantity: </h6><input type="number" name="product_qty" value="{{i.product_qty}}" min="1" max="10" readonly onchange="this.form.submit();">
+                        </form>
+                     </div>
+                     <div class="detail-box">
+                       
+                        <h6>
+                           Total Price: ₹{{i.total_price}}
+                        </h6>
+                     </div>
+                     <div class="detail-box">
+                       
+                        <h6>
+                           Delivery Charge: ₹{{i.delivery_charge}}
+                        </h6>
+                     </div>
+                  </div>
+                  
+
+               </div>
+
+               {% endfor %}
+       
+         </div>
+      </section>
+      <!-- end product section -->
+      {% endblock%}
+   </body>
+</html>

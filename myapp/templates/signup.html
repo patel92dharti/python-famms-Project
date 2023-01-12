@@ -1,0 +1,118 @@
+{% extends 'header.html'%}
+{% load static %}
+{% block content%} 
+<!DOCTYPE html>
+<html>
+   <head>
+      
+   </head>
+   <body class="sub_page">
+      <div class="hero_area">
+        
+      </div>
+      <!-- inner page section -->
+      <section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>Sign Up</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end inner page section -->
+      <!-- why section -->
+      <section class="why_section layout_padding">
+         <div class="container">
+         
+            <div class="row">
+               <div class="col-lg-8 offset-lg-2">
+                  <div class="full">
+                    {% if msg %}
+                        <b style="color: blue;">{{msg}}</b>
+                    {% endif %}
+                     <form action="{% url 'signup'%}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <fieldset>
+                           <b style="color: rgb(212, 25, 25);"><span id="email_error"></span></b>
+
+                           <select name="usertype" id="">
+                              <option>---Select User Type---</option>
+                              <option value="buyer">Buyer</option>
+                              <option value="seller">Seller</option>
+                           </select>
+
+                           <input type="text" placeholder="Enter your First name" name="fname" required />
+                           <input type="text" placeholder="Enter your Last name" name="lname" required />
+                           <input type="email" id="email" placeholder="Enter your email address" name="email" required />
+                           <input type="text" placeholder="Enter your Mobile" name="mobile" required />
+
+                           <textarea placeholder="Enter your Address" required name="address" rows="4" ></textarea>
+                           <input type="file"  name="profile_pic" required />
+
+                           <input type="password" placeholder="Enter your Password" name="password" required />
+
+                           <input type="password" placeholder="Enter your Confirm Password" name="cpassword" required />
+                           
+                           <input type="submit" value="Submit" />
+                        </fieldset>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end why section -->
+      <!-- arrival section -->
+      <section class="arrival_section">
+         <div class="container">
+            <div class="box">
+               <div class="arrival_bg_box">
+                  <img src="{% static 'images/arrival-bg.png' %}" alt="">
+               </div>
+               <div class="row">
+                  <div class="col-md-6 ml-auto">
+                     <div class="heading_container remove_line_bt">
+                        <h2>
+                           #NewArrivals
+                        </h2>
+                     </div>
+                     <p style="margin-top: 20px;margin-bottom: 30px;">
+                        Vitae fugiat laboriosam officia perferendis provident aliquid voluptatibus dolorem, fugit ullam sit earum id eaque nisi hic? Tenetur commodi, nisi rem vel, ea eaque ab ipsa, autem similique ex unde!
+                     </p>
+                     <a href="">
+                     Shop Now
+                     </a>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end arrival section -->
+    
+   </body>
+   <script>
+      $("#email").change(function(){
+        var email=$(this).val();
+        $.ajax({
+          url: '/ajax/validate_email/',
+          data: {
+            'email': email
+          },
+          dataType: 'json',
+          success: function (data) {
+            if (data.is_taken) {
+              /*document.getElementById("email").style.border="5px solid red";*/
+              document.getElementById("email_error").innerHTML="This Email ID Is Already Registered";
+            }else{
+               document.getElementById("email_error").innerHTML="";
+            }
+          }
+        });
+      });
+
+    </script>
+</html>
+{% endblock %} 

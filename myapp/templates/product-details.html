@@ -1,0 +1,101 @@
+{% extends 'header.html'%}
+{% load static %}
+{% block content%} 
+<!DOCTYPE html>
+<html>
+   <head>
+     
+   </head>
+   <body class="sub_page">
+      <div class="hero_area">
+         
+      </div>
+      <!-- inner page section -->
+      <section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>Product Grid</h3>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+      <!-- end inner page section -->
+      <!-- product section -->
+      <section class="product_section layout_padding">
+         <div class="container">
+            <div class="heading_container heading_center">
+               <h2>
+                My <span>Products</span>
+               </h2>
+            </div>
+            <div class="row">
+               <div class="col-sm-6 col-md-6 col-lg-7">
+                  <div class="box">
+                    
+                     <div class="img-box">
+                        <img src="{{product.product_pic.url}}" alt="">
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Category: {{product.product_category}}
+                        </h5>
+                        <h6>
+                            ₹{{product.product_price}}
+                        </h6>
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           {{product.product_name}}
+                        </h5>
+                        <h6>
+                           {{product.product_desc}}
+                        </h6>
+                     </div>
+                     <div class="detail-box">
+                        <h5>
+                           Size: {{product.product_size}}
+                        </h5>
+                        
+                     </div>
+                     <div class="detail-box">
+                        {% if request.session.email %}
+
+                        <h5>
+                           {% if wishlist_flag == False %}
+
+                           <a href="{% url 'add-to-wishlist' pk=product.pk%}">
+                              <input type="button" value="Add To Wishlist" class="btn btn-primary"></a>
+                           {% else %}
+                              <a href="{% url 'remove-from-wishlist' pk=product.pk%}">
+                                 <input type="button" value="Remove From Wishlist" class="btn btn-danger"></a>
+                              {% endif %}
+                        </h5>
+                        <h6>
+                           {% if cart_flag == False %}
+                           <a href="{% url 'add-to-cart' pk=product.pk %}"><input type="button" value="Add To Cart" class="btn btn-primary"></a>
+                           {% else %}
+                           <a href="{% url 'remove-from-cart' pk=product.pk %}"><input type="button" value="Remove From Cart" class="btn btn-danger"></a>
+                           {% endif %}
+                        </h6>
+
+                        {% else %}
+                        <h5>
+                            <a href="{% url 'login' %}"><input type="button" value="Login" class="btn btn-primary"></a>
+ 
+                         </h5>
+                        {% endif %}
+                     </div>
+                  </div>
+               </div>
+               </div>
+            </div>
+           
+         </div>
+      </section>
+      <!-- end product section -->
+      {% endblock%}
+   </body>
+</html>
